@@ -1,6 +1,11 @@
 <ion-view title="Get Me A Cab (Rider)" >
     <ion-content has-header="true" padding="true">
-        <user></user>
+        <div class="content padding">
+            Name: {{name}}
+        </div>
+        <div class="content padding">
+            Phone: {{phone}}
+        </div>
         <div class="content padding">
             <button class="button button-positive button-block" ng-click="request()">
                 Request A Cab

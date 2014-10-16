@@ -1,20 +1,6 @@
-angular.module('starter.directives',[]).directive('request',['$rootScope','SOCKET_URL',function($rootScope,SOCKET_URL){
-    return{
-        replace:true,
-        restrict:'AE',
-        scope:{
-
-        },
-        link:function(scope,elem,attrs){
-            scope.messages = [];
-            socket = io.connect(SOCKET_URL);
-            socket.emit('driver:ready');
-            socket.on('request',function(data){
-                scope.$apply(function(){
-                    scope.messages.unshift(data);
-                });
-            });
-        },
-        templateUrl:'templates/request.html'
-    }
-}]);
+angular.module('starter.directives',[])
+.directive('user', function() {
+    return {
+        template: 'templates/user.html'
+    };
+});
