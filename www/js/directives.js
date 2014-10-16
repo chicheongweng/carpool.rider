@@ -8,7 +8,7 @@ angular.module('starter.directives',[]).directive('request',['$rootScope','SOCKE
         link:function(scope,elem,attrs){
             scope.messages = [];
             socket = io.connect(SOCKET_URL);
-            socket.emit('rider:signin');
+            socket.emit('driver:ready');
             socket.on('request',function(data){
                 scope.$apply(function(){
                     scope.messages.unshift(data);

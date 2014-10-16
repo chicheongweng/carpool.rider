@@ -5,10 +5,9 @@ angular.module('starter.controllers',[]).controller('AccountCtrl',['$scope','USE
         USER.phone=$scope.user.phone;
         $state.go('tab.dash');
     }
-}]).controller('DashCtrl',['$scope','$rootScope','USER', '$state', function($scope,$rootScope,USER,$state){
-
-    $rootScope.$on('event:file:selected',function(event,data){
-        //console.log(data.image)
-    });
-
+}]).controller('DashCtrl',['$scope','$rootScope','USER', '$state', 'SOCKET_URL', function($scope,$rootScope,USER,$state,SOCKET_URL){
+    $scope.request=function(){
+        socket = io.connect(SOCKET_URL);
+        socket.emit('rider:request', {name:USER.name, phone:USER.phone});
+    }
 }]);
