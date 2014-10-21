@@ -11,5 +11,6 @@ angular.module('starter.controllers',[]).controller('AccountCtrl',['$scope','USE
     $scope.request=function(){
         socket = io.connect(SOCKET_URL);
         socket.emit('rider:request', {name:USER.name, phone:USER.phone});
+        socket.close();
     }
 }]);
