@@ -7,7 +7,7 @@
 
 
   <!-- Dashboard Tab -->
-  <ion-tab title="Dashboard" icon="icon ion-home" href="#/tab/dash">
+  <ion-tab title="Dashboard" icon="icon ion-home" href="#/tab/dash" ng-if="$root.state!='signout'">
     <ion-nav-view name="tab-dash"></ion-nav-view>
   </ion-tab>
 

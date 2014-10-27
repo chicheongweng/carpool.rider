@@ -1,25 +1,43 @@
-<ion-view title="Get Me A Cab (Rider)" >
-    <ion-content has-header="true" padding="true">
-        <div class="card">
-            <div class="item item-divider">
-                Enter your name
-            </div>
-            <div class="item item-text-wrap">
-                <input type="text" placeholder="Enter your name" ng-model="user.name"/>
-            </div>
+<ion-view title="Get Me A Cab (Rider)">
+<ion-content class="padding">
+
+<div ng-hide="isSignIn()">
+    <div class="card">
+        <div class="item item-divider">
+            Driver name
         </div>
-        <div class="card">
-            <div class="item item-divider">
-                Enter your phone number
-            </div>
-            <div class="item item-text-wrap">
-                <input type="text" placeholder="Enter your phone number" ng-model="user.phone"/>
-            </div>
+        <div class="item item-text-wrap">
+            <input type="text" placeholder="Enter your name" ng-model="user.name"/>
         </div>
-        <div class="content padding">
-            <button class="button button-positive button-block" ng-click="signin()">
-                Signin 
-            </button>
+    </div>
+    <div class="card">
+        <div class="item item-divider">
+            Driver phone number
         </div>
-    </ion-content>
+        <div class="item item-text-wrap">
+            <input type="text" placeholder="Enter your phone number" ng-model="user.phone"/>
+        </div>
+    </div>
+    <div class="content padding">
+        <button class="button button-positive button-block" ng-click="signin()">
+            Signin
+        </button>
+    </div>
+</div>
+
+<div ng-show="isSignIn()">
+    <div>
+        <b>Driver name:</b> {{user.name}}
+    </div>
+    <div>
+        <b>Driver phone number:</b> {{user.phone}}
+    </div>
+    <div class="content padding">
+        <button class="button button-positive button-block" ng-click="signout()">
+            Signout
+        </button>
+    </div>
+</div>
+
+</ion-content>
 </ion-view>
