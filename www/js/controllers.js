@@ -28,7 +28,7 @@ angular.module('starter.controllers',[]).controller('AccountCtrl',['$rootScope',
     }
 }])
 
-.controller('MapCtrl', function($scope, $cordovaGeolocation) {
+.controller('MapCtrl', function($scope, $http, $cordovaGeolocation) {
     console.log("init map");
     $scope.msg = "";
     $scope.coords = [0,0];
@@ -36,33 +36,44 @@ angular.module('starter.controllers',[]).controller('AccountCtrl',['$rootScope',
 
     var init = function () {
         var mapOptions = {};
-        var map = new google.maps.Map(document.getElementById("map"),
-                                      mapOptions);
+        var map = new google.maps.Map(document.getElementById("map"), mapOptions);
 
-                                      $scope.map = map;
+        $scope.map = map;
 
-                                      // get coords
-                                      $cordovaGeolocation.getCurrentPosition().then(function(position) {
-                                          // Position here: position.coords.latitude, position.coords.longitude
-                                          console.log("setting map");
-                                          $scope.msg = position.coords.latitude + ":" + position.coords.longitude;
-                                          $scope.updateCenter(parseFloat(position.coords.latitude), parseFloat(position.coords.longitude));
-                                      }, function(err) {
-                                          $scope.msg = "unable to determine location";
-                                      });
+        // get coords
+        $cordovaGeolocation.getCurrentPosition().then(function(position) {
+            // Position here: position.coords.latitude, position.coords.longitude
+            console.log("setting map");
+            $scope.msg = position.coords.latitude + ":" + position.coords.longitude;
+            $scope.updateCenter(parseFloat(position.coords.latitude), parseFloat(position.coords.longitude));
+        }, function(err) {
+            $scope.msg = "unable to determine location";
+        });
     };
-
 
     $scope.updateCenter = function(lat, lng) {
         /*var mapOptions = {
-center: new google.maps.LatLng(0,0),
-zoom: 16,
-mapTypeId: google.maps.MapTypeId.ROADMAP
-};*/
+            center: new google.maps.LatLng(0,0),
+            zoom: 16,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        };*/
         $scope.map.setCenter(new google.maps.LatLng(lat, lng));
         $scope.map.setZoom(16);
         $scope.centerLat = lat;
         $scope.centerLng = lng;
+        apiKey = 'AIzaSyAEKs4ZY-sOsDnaq-M27MiOfhWK4dJfDSg';
+        $scope.url = 'https://maps.googleapis.com/maps/api/geocode/json?latlng='+lat+','+lng+'&location_type=ROOFTOP&result_type=street_address&key=AIzaSyAEKs4ZY-sOsDnaq-M27MiOfhWK4dJfDSg';
+        $http.get($scope.url).
+            success(function(data, status, headers, config) {
+                if (data.status=='OK') {
+                    $scope.address = data.results[0].formatted_address;
+                }
+                else {
+                    $scope.address = "unknown";
+                }
+        }).
+            error(function(data, status, headers, config) {
+        });
         $scope.mapVisible =true;
     };
 
