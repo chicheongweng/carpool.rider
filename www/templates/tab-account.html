@@ -1,5 +1,5 @@
 <ion-view title="Get Me A Cab (Rider)">
-<ion-content class="padding">
+<ion-content has-header="true" padding="true">
 
 <div ng-hide="isSignIn()">
     <div class="card">
@@ -26,10 +26,10 @@
 </div>
 
 <div ng-show="isSignIn()">
-    <div>
+    <div class="content padding">
         <b>Driver name:</b> {{user.name}}
     </div>
-    <div>
+    <div class="content padding">
         <b>Driver phone number:</b> {{user.phone}}
     </div>
     <div class="content padding">
