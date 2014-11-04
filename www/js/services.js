@@ -1,2 +1,4 @@
-angular.module('starter.services', []).value('USER', {}).value('SOCKET_URL','127.0.0.1:8000')
+angular.module('starter.services', [])
+.value('USER', {})
+.value('SOCKET_URL','54.251.92.139:8000')
 
