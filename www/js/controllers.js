@@ -1,14 +1,14 @@
-angular.module('starter.controllers',[]).controller('AccountCtrl',['$rootScope','$scope','USER','$state',function($rootScope, $scope,USER,$state){
+angular.module('starter.controllers',[]).controller('AccountCtrl',['$rootScope','$scope','data','$state',function($rootScope,$scope,data,$state){
     $scope.user={};
-    if (USER.name) {
-        $scope.user.name = USER.name;
+    if (data.user.name) {
+        $scope.user.name = data.user.name;
     }
-    if (USER.phone) {
-        $scope.user.phone = USER.phone;
+    if (data.user.phone) {
+        $scope.user.phone = data.user.phone;
     }
     $scope.signin=function(){
-        USER.name=$scope.user.name;
-        USER.phone=$scope.user.phone;
+        data.user.name=$scope.user.name;
+        data.user.phone=$scope.user.phone;
         $rootScope.state='signin';
         $state.go('tab.dash');
     }
@@ -18,12 +18,11 @@ angular.module('starter.controllers',[]).controller('AccountCtrl',['$rootScope',
     $scope.isSignIn=function(){
         return $rootScope.state=='signin';
     }
-}]).controller('DashCtrl',['$scope','$rootScope','USER', '$state', 'SOCKET_URL', function($scope,$rootScope,USER,$state,SOCKET_URL){
-    $scope.name = USER.name;
-    $scope.phone = USER.phone;
+}]).controller('DashCtrl',['$scope','$rootScope','data', '$state', function($scope,$rootScope,data,$state){
+    $scope.name = data.user.name;
+    $scope.phone = data.user.phone;
     $scope.request=function(){
-        socket = io.connect(SOCKET_URL);
-        socket.emit('rider:request', {name:USER.name, phone:USER.phone});
+        data.socket.emit('rider:request', {name:data.user.name, phone:data.user.phone});
     }
 }])
 
