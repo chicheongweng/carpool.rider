@@ -1,3 +1,12 @@
+function getUUID() {
+    var d = new Date().getTime();
+    var u = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+        var r = (d + Math.random()*16)%16 | 0;
+        d = Math.floor(d/16);
+        return (c=='x' ? r : (r&0x7|0x8)).toString(16);
+    });
+    return u.toUpperCase();
+};
 
 angular.module('starter', ['ionic', 'ngCordova', 'google-maps', 'starter.controllers', 'starter.services', 'starter.directives'])
 
@@ -53,5 +62,27 @@ angular.module('starter', ['ionic', 'ngCordova', 'google-maps', 'starter.control
             }
         }
     });
-});
+})
 
+.factory('data', function ($cordovaDevice) {
+    var device
+    try {
+        device = $cordovaDevice.getDevice();
+    }
+    catch(err) {
+        device = {available: true,
+            platform: undefined,
+            version: undefined,
+            uuid: getUUID(),
+            cordova: undefined,
+            model: undefined
+        };
+    }; 
+    return {
+        device: device,
+        uuid: undefined,
+        user: {name: undefined, phone: undefined},
+        socket: io.connect('54.251.92.139:8000'),
+        listenerAdded: false
+    };
+});
