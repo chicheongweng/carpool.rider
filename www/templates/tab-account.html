@@ -1,6 +1,11 @@
 <ion-view title="Get Me A Cab (Rider)">
 <ion-content has-header="true" padding="true">
 
+<div><b>Device id:</b>  {{device.uuid}}</div>
+<div><b>Platform:</b>  {{device.platform}}</div>
+<div><b>Model:</b>  {{device.model}}</div>
+<div><b>Version:</b>  {{device.version}}</div>
+
 <div ng-hide="isSignIn()">
     <div class="card">
         <div class="item item-divider">

@@ -1,4 +1,5 @@
 angular.module('starter.controllers',[]).controller('AccountCtrl',['$rootScope','$scope','data','$state',function($rootScope,$scope,data,$state){
+    $scope.device = data.device;
     $scope.user={};
     if (data.user.name) {
         $scope.user.name = data.user.name;
