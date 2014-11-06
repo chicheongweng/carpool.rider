@@ -1,4 +1,5 @@
-angular.module('starter.controllers',[]).controller('AccountCtrl',['$rootScope','$scope','data','$state',function($rootScope,$scope,data,$state){
+angular.module('starter.controllers',[])
+.controller('AccountCtrl',['$rootScope','$scope','data','$state',function($rootScope,$scope,data,$state){
     $scope.device = data.device;
     $scope.user={};
     if (data.user.name) {
@@ -19,7 +20,9 @@ angular.module('starter.controllers',[]).controller('AccountCtrl',['$rootScope',
     $scope.isSignIn=function(){
         return $rootScope.state=='signin';
     }
-}]).controller('DashCtrl',['$scope','$rootScope','data', '$state', function($scope,$rootScope,data,$state){
+}])
+
+.controller('DashCtrl',['$scope','$rootScope','data', '$state', function($scope,$rootScope,data,$state){
     $scope.name = data.user.name;
     $scope.phone = data.user.phone;
     $scope.request=function(){
@@ -28,7 +31,6 @@ angular.module('starter.controllers',[]).controller('AccountCtrl',['$rootScope',
 }])
 
 .controller('MapCtrl', function($scope, $http, $cordovaGeolocation) {
-    console.log("init map");
     $scope.msg = "";
     $scope.coords = [0,0];
     $scope.mapVisible = true;
@@ -36,13 +38,9 @@ angular.module('starter.controllers',[]).controller('AccountCtrl',['$rootScope',
     var init = function () {
         var mapOptions = {};
         var map = new google.maps.Map(document.getElementById("map"), mapOptions);
-
         $scope.map = map;
 
-        // get coords
         $cordovaGeolocation.getCurrentPosition().then(function(position) {
-            // Position here: position.coords.latitude, position.coords.longitude
-            console.log("setting map");
             $scope.msg = position.coords.latitude + ":" + position.coords.longitude;
             $scope.updateCenter(parseFloat(position.coords.latitude), parseFloat(position.coords.longitude));
         }, function(err) {
@@ -75,7 +73,6 @@ angular.module('starter.controllers',[]).controller('AccountCtrl',['$rootScope',
         });
         $scope.mapVisible =true;
     };
-
 
     init();
 })
