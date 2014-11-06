@@ -69,15 +69,14 @@ angular.module('starter.controllers',[])
             success(function(data, status, headers, config) {
                 console.log("data.status "+data.status);
                 if (data.status=='OK') {
-                    address = data.results[0].formatted_address;
+                    $scope.address = data.results[0].formatted_address;
                 }
                 else {
-                    address = "unknown";
+                    $scope.address = "unknown";
                 }
         }).
             error(function(data, status, headers, config) {
         });
-        return address;
     };
 
     updateCenter = function(lat, lng) {
@@ -90,7 +89,7 @@ angular.module('starter.controllers',[])
         $scope.map.setZoom(16);
         $scope.centerLat = lat;
         $scope.centerLng = lng;
-        $scope.address = getAddressFromGeoLocation(lat, lng);
+        getAddressFromGeoLocation(lat, lng);
         console.log("scope.address = "+$scope.address);
         $scope.mapVisible =true;
     };
