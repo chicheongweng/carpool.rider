@@ -1,5 +1,5 @@
 angular.module('starter.controllers',[])
-.controller('AccountCtrl',['$rootScope','$scope','data','$state', 'localstorage', function($rootScope,$scope,data,$state, localstorage){
+.controller('AccountCtrl',['$scope','data','$state', 'localstorage', function($scope,data,$state, localstorage){
     localstorage.set('state','tab.account');
     $scope.device = data.device;
     $scope.user={};
@@ -12,23 +12,23 @@ angular.module('starter.controllers',[])
     $scope.signin=function(){
         data.user.name=$scope.user.name;
         data.user.phone=$scope.user.phone;
-        $rootScope.connstate='signin';
+        data.connstate='signin';
         localstorage.set('name', data.user.name);
         localstorage.set('phone', data.user.phone);
-        localstorage.set('connstate','signin');
+        localstorage.set('connstate',data.connstate);
         $state.go('tab.dash');
     }
     $scope.signout=function(){
-        $rootScope.connstate='signout';
+        data.connstate='signout';
         localstorage.remove('state');
         localstorage.remove('connstate');
     }
     $scope.isSignIn=function(){
-        return $rootScope.connstate=='signin';
+        return data.connstate=='signin';
     }
 }])
 
-.controller('DashCtrl',['$scope','$rootScope','data', '$state', 'localstorage', function($scope,$rootScope,data,$state, localstorage){
+.controller('DashCtrl',['$scope','data', '$state', 'localstorage', function($scope,data,$state, localstorage){
     localstorage.set('state','tab.dash');
     $scope.name = data.user.name;
     $scope.phone = data.user.phone;

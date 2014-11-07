@@ -19,7 +19,6 @@ angular.module('starter', ['ionic', 'ngCordova', 'google-maps', 'starter.control
       StatusBar.styleDefault();
     }
 
-    $rootScope.connstate = $window.localStorage['connstate'] || 'signout';
     var state = $window.localStorage['state'] || 'tab.account';
     $state.go(state);
 
@@ -109,6 +108,8 @@ angular.module('starter', ['ionic', 'ngCordova', 'google-maps', 'starter.control
             phone: $window.localStorage['phone'] || undefined
         },
         socket: io.connect('54.251.92.139:8000'),
-        listenerAdded: false
+        listenerAdded: false,
+        connstate: $window.localStorage['connstate'] || 'signout',
+        state: $window.localStorage['state'] || 'tab.account'
     };
 });
