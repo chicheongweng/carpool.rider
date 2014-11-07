@@ -19,7 +19,6 @@ angular.module('starter', ['ionic', 'ngCordova', 'google-maps', 'starter.control
       StatusBar.styleDefault();
     }
 
-    $rootScope.connstate='signout';
     $rootScope.connstate = $window.localStorage['connstate'] || 'signout';
     var state = $window.localStorage['state'] || 'tab.account';
     $state.go(state);
@@ -71,7 +70,7 @@ angular.module('starter', ['ionic', 'ngCordova', 'google-maps', 'starter.control
 .factory('localstorage', ['$window', function($window) {
     return {
         remove: function(key) {
-            $window.removeItem(key);
+            $window.localStorage.removeItem(key);
         },
         set: function(key, value) {
             $window.localStorage[key] = value;
@@ -88,7 +87,7 @@ angular.module('starter', ['ionic', 'ngCordova', 'google-maps', 'starter.control
     }
 }])
 
-.factory('data', function ($cordovaDevice) {
+.factory('data', function ($cordovaDevice, $window) {
     var device
     try {
         device = $cordovaDevice.getDevice();
@@ -105,7 +104,10 @@ angular.module('starter', ['ionic', 'ngCordova', 'google-maps', 'starter.control
     return {
         device: device,
         uuid: undefined,
-        user: {name: undefined, phone: undefined},
+        user: { 
+            name: $window.localStorage['name'] || undefined,
+            phone: $window.localStorage['phone'] || undefined
+        },
         socket: io.connect('54.251.92.139:8000'),
         listenerAdded: false
     };

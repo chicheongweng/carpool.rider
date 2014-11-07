@@ -13,12 +13,15 @@ angular.module('starter.controllers',[])
         data.user.name=$scope.user.name;
         data.user.phone=$scope.user.phone;
         $rootScope.connstate='signin';
+        localstorage.set('name', data.user.name);
+        localstorage.set('phone', data.user.phone);
         localstorage.set('connstate','signin');
         $state.go('tab.dash');
     }
     $scope.signout=function(){
         $rootScope.connstate='signout';
-        localstorage.set('connstate','signout');
+        localstorage.remove('state');
+        localstorage.remove('connstate');
     }
     $scope.isSignIn=function(){
         return $rootScope.connstate=='signin';
