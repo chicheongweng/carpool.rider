@@ -1,5 +1,6 @@
 angular.module('starter.controllers',[])
-.controller('AccountCtrl',['$rootScope','$scope','data','$state',function($rootScope,$scope,data,$state){
+.controller('AccountCtrl',['$rootScope','$scope','data','$state', 'localstorage', function($rootScope,$scope,data,$state, localstorage){
+    localstorage.set('state','tab.account');
     $scope.device = data.device;
     $scope.user={};
     if (data.user.name) {
@@ -11,18 +12,21 @@ angular.module('starter.controllers',[])
     $scope.signin=function(){
         data.user.name=$scope.user.name;
         data.user.phone=$scope.user.phone;
-        $rootScope.state='signin';
+        $rootScope.connstate='signin';
+        localstorage.set('connstate','signin');
         $state.go('tab.dash');
     }
     $scope.signout=function(){
-        $rootScope.state='signout';
+        $rootScope.connstate='signout';
+        localstorage.set('connstate','signout');
     }
     $scope.isSignIn=function(){
-        return $rootScope.state=='signin';
+        return $rootScope.connstate=='signin';
     }
 }])
 
-.controller('DashCtrl',['$scope','$rootScope','data', '$state', function($scope,$rootScope,data,$state){
+.controller('DashCtrl',['$scope','$rootScope','data', '$state', 'localstorage', function($scope,$rootScope,data,$state, localstorage){
+    localstorage.set('state','tab.dash');
     $scope.name = data.user.name;
     $scope.phone = data.user.phone;
     $scope.request=function(){
@@ -30,7 +34,8 @@ angular.module('starter.controllers',[])
     }
 }])
 
-.controller('MapCtrl', function($scope, $http, $cordovaGeolocation) {
+.controller('MapCtrl', function($scope, $http, $cordovaGeolocation, localstorage) {
+    localstorage.set('state','tab.map');
     $scope.msg = "";
     $scope.coords = [0,0];
     $scope.mapVisible = true;

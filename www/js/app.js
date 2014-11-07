@@ -10,7 +10,7 @@ function getUUID() {
 
 angular.module('starter', ['ionic', 'ngCordova', 'google-maps', 'starter.controllers', 'starter.services', 'starter.directives'])
 
-.run(function($ionicPlatform, $rootScope, $state) {
+.run(function($ionicPlatform, $rootScope, $state, $window) {
   $ionicPlatform.ready(function() {
     if(window.cordova && window.cordova.plugins.Keyboard) {
       cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
@@ -18,8 +18,12 @@ angular.module('starter', ['ionic', 'ngCordova', 'google-maps', 'starter.control
     if(window.StatusBar) {
       StatusBar.styleDefault();
     }
-    $rootScope.state='signout';
-    $state.go('tab.account')
+
+    $rootScope.connstate='signout';
+    $rootScope.connstate = $window.localStorage['connstate'] || 'signout';
+    var state = $window.localStorage['state'] || 'tab.account';
+    $state.go(state);
+
   });
 })
 
@@ -63,6 +67,26 @@ angular.module('starter', ['ionic', 'ngCordova', 'google-maps', 'starter.control
         }
     });
 })
+
+.factory('localstorage', ['$window', function($window) {
+    return {
+        remove: function(key) {
+            $window.removeItem(key);
+        },
+        set: function(key, value) {
+            $window.localStorage[key] = value;
+        },
+        get: function(key, defaultValue) {
+            return $window.localStorage[key] || defaultValue;
+        },
+        setObject: function(key, value) {
+            $window.localStorage[key] = JSON.stringify(value);
+        },
+        getObject: function(key) {
+            return JSON.parse($window.localStorage[key] || '{}');
+        }
+    }
+}])
 
 .factory('data', function ($cordovaDevice) {
     var device
