@@ -100,6 +100,7 @@ angular.module('starter', ['ionic', 'ngCordova', 'google-maps', 'starter.control
             model: undefined
         };
     }; 
+    var socket = io.connect('54.251.92.139:8000', {'reconnection limit': 5000});
     return {
         device: device,
         uuid: undefined,
@@ -107,7 +108,7 @@ angular.module('starter', ['ionic', 'ngCordova', 'google-maps', 'starter.control
             name: $window.localStorage['name'] || undefined,
             phone: $window.localStorage['phone'] || undefined
         },
-        socket: io.connect('54.251.92.139:8000'),
+        socket: socket,
         listenerAdded: false,
         connstate: $window.localStorage['connstate'] || 'signout',
         state: $window.localStorage['state'] || 'tab.account'
