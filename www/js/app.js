@@ -87,34 +87,47 @@ angular.module('starter', ['ionic', 'ngCordova', 'google-maps', 'starter.control
 }])
 
 .factory('data', function ($cordovaDevice, $window) {
+    var URL = '54.251.92.139:8001';
+    var uuid = $window.localStorage['uuid'] || getUUID();
     var device;
+    var socket;
     var name = $window.localStorage['name'] || undefined;
     var phone = $window.localStorage['phone'] || undefined;
+    var connstate = $window.localStorage['connstate'] || 'signout';
     try {
         device = $cordovaDevice.getDevice();
-        device.uuid.toLowerCase();
+        device.uuid = device.uuid.toLowerCase();
     }
     catch(err) {
         device = {available: true,
             platform: undefined,
             version: undefined,
-            uuid: getUUID(),
+            uuid: uuid,
             cordova: undefined,
             model: undefined
         };
     }; 
-    var socket = io.connect('54.251.92.139:8001', {'reconnection limit': 5000});
-    socket.emit('client:signin', {name: name, phone: phone, uuid: device.uuid, device: device});
+    if (connstate == 'signin') {
+        socket = io.connect(URL);
+        socket.emit('rider:signin', {user: {name: name, phone: phone}, device: device});
+    } else {
+        socket = undefined;
+    };
     return {
         device: device,
-        uuid: undefined,
+        uuid: uuid,
         user: { 
             name: name,
             phone: phone
         },
+        URL: URL,
+        params: {'reconnection limit': 5000},
         socket: socket,
-        listenerAdded: false,
-        connstate: $window.localStorage['connstate'] || 'signout',
-        state: $window.localStorage['state'] || 'tab.account'
+        requestlistenerAdded: false,
+        reconnlistenerAdded: false,
+        connstate: connstate,
+        state: $window.localStorage['state'] || 'tab.account',
+        signinFlag: false
     };
 });
+

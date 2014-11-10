@@ -10,17 +10,29 @@ angular.module('starter.controllers',[])
         $scope.user.phone = data.user.phone;
     }
     $scope.signin=function(){
+        if (!$scope.user.name||!$scope.user.phone) {
+            return;
+        }
         data.user.name=$scope.user.name;
         data.user.phone=$scope.user.phone;
         data.connstate='signin';
         localstorage.set('name', data.user.name);
         localstorage.set('phone', data.user.phone);
         localstorage.set('connstate',data.connstate);
-        data.socket.emit('rider:signin', {user:data.user, device:data.device});
+        if (data.signinFlag) {
+            data.socket.socket.reconnect();
+            data.socket.emit('rider:signin', {user:$scope.user, device:data.device});
+        } else {
+            data.socket = io.connect(data.URL, data.params);
+            data.socket.emit('rider:signin', {user:$scope.user, device:data.device});
+            data.signinFlag = true;
+        }
         $state.go('tab.dash');
     }
     $scope.signout=function(){
+        data.socket.disconnect();
         data.connstate='signout';
+        data.listenerAdded = false;
         localstorage.remove('state');
         localstorage.remove('connstate');
     }
@@ -31,6 +43,8 @@ angular.module('starter.controllers',[])
 
 .controller('DashCtrl',['$scope','data', '$state', 'localstorage', function($scope,data,$state, localstorage){
     localstorage.set('state','tab.dash');
+    $scope.state = $state;
+    $scope.device = data.device
     $scope.name = data.user.name;
     $scope.phone = data.user.phone;
     $scope.request=function(){
