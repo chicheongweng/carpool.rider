@@ -21,13 +21,9 @@ angular.module('starter.controllers',[])
         localstorage.set('connstate',data.connstate);
         if (data.signinFlag) {
             data.socket.socket.reconnect();
-            //data.socket.emit('rider:signin', {user:$scope.user, device:data.device});
         } else {
             data.socket = io.connect(data.URL, data.params);
             data.socket.on('connect', function() {
-                data.socket.emit('rider:signin', {user:$scope.user, device:data.device});
-            });
-            data.socket.on('reconnect', function() {
                 data.socket.emit('rider:signin', {user:$scope.user, device:data.device});
             });
             data.signinFlag = true;
