@@ -87,9 +87,12 @@ angular.module('starter', ['ionic', 'ngCordova', 'google-maps', 'starter.control
 }])
 
 .factory('data', function ($cordovaDevice, $window) {
-    var device
+    var device;
+    var name = $window.localStorage['name'] || undefined;
+    var phone = $window.localStorage['phone'] || undefined;
     try {
         device = $cordovaDevice.getDevice();
+        device.uuid.toLowerCase();
     }
     catch(err) {
         device = {available: true,
@@ -100,13 +103,14 @@ angular.module('starter', ['ionic', 'ngCordova', 'google-maps', 'starter.control
             model: undefined
         };
     }; 
-    var socket = io.connect('54.251.92.139:8000', {'reconnection limit': 5000});
+    var socket = io.connect('54.251.92.139:8001', {'reconnection limit': 5000});
+    socket.emit('client:signin', {name: name, phone: phone, uuid: device.uuid, device: device});
     return {
         device: device,
         uuid: undefined,
         user: { 
-            name: $window.localStorage['name'] || undefined,
-            phone: $window.localStorage['phone'] || undefined
+            name: name,
+            phone: phone
         },
         socket: socket,
         listenerAdded: false,

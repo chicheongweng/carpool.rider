@@ -16,6 +16,7 @@ angular.module('starter.controllers',[])
         localstorage.set('name', data.user.name);
         localstorage.set('phone', data.user.phone);
         localstorage.set('connstate',data.connstate);
+        data.socket.emit('rider:signin', {user:data.user, device:data.device});
         $state.go('tab.dash');
     }
     $scope.signout=function(){
