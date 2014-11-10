@@ -109,7 +109,9 @@ angular.module('starter', ['ionic', 'ngCordova', 'google-maps', 'starter.control
     }; 
     if (connstate == 'signin') {
         socket = io.connect(URL);
-        socket.emit('rider:signin', {user: {name: name, phone: phone}, device: device});
+        socket.on('connect', function() {
+            socket.emit('rider:signin', {user: {name: name, phone: phone}, device: device});
+        });
     } else {
         socket = undefined;
     };
