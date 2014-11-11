@@ -86,19 +86,20 @@ angular.module('starter', ['ionic', 'ngCordova', 'google-maps', 'starter.control
     }
 }])
 
-.factory('geo', function($http, $scope) {
+.factory('geo', function($http) {
     return {
-        getGeoLocation: function(lat, lng) {
+        getAddressFromGeoLocation: function(lat, lng, callback) {
             apiKey = 'AIzaSyAEKs4ZY-sOsDnaq-M27MiOfhWK4dJfDSg';
             url = 'https://maps.googleapis.com/maps/api/geocode/json?latlng='+lat+','+lng+'&location_type=ROOFTOP&result_type=street_address&key='+apiKey;
             $http.get(url).
                 success(function(data, status, headers, config) {
                     if (data.status=='OK') {
-                        $scope.address = data.results[0].formatted_address;
+                        address = data.results[0].formatted_address;
                     }
                     else {
-                        $scope.address = "unknown";
-                    }
+                        address = "unknown";
+                    };
+                    callback(address);
             });
         }
     }

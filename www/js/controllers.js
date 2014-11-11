@@ -55,24 +55,11 @@ angular.module('starter.controllers',[])
     }
 }])
 
-.controller('MapCtrl', function($scope, $http, $cordovaGeolocation, localstorage, data) {
+.controller('MapCtrl', function($scope, $http, $cordovaGeolocation, localstorage, data, geo) {
     localstorage.set('state','tab.map');
     $scope.msg = "";
     $scope.coords = [0,0];
     $scope.mapVisible = true;
-
-    var getAddressFromGeoLocation = function(lat, lng) {
-        $scope.url = 'https://maps.googleapis.com/maps/api/geocode/json?latlng='+lat+','+lng+'&location_type=ROOFTOP&result_type=street_address&key='+data.apiKey;
-        $http.get($scope.url).
-            success(function(data, status, headers, config) {
-                if (data.status=='OK') {
-                    $scope.address = data.results[0].formatted_address;
-                }
-                else {
-                    $scope.address = "unknown";
-                }
-        });
-    };
 
     var updateCenter = function(lat, lng) {
         /*var mapOptions = {
@@ -93,7 +80,9 @@ angular.module('starter.controllers',[])
             var lat = parseFloat(position.coords.latitude);
             var lng = parseFloat(position.coords.longitude);
             updateCenter(lat, lng);
-            getAddressFromGeoLocation(lat, lng);
+            geo.getAddressFromGeoLocation(lat, lng, function(address) {
+                $scope.address = address;
+            });
         }, function(err) {
             $scope.msg = "unable to determine location";
         });
