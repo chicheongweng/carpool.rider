@@ -86,7 +86,7 @@ angular.module('starter', ['ionic', 'ngCordova', 'google-maps', 'starter.control
     }
 }])
 
-.factory('geo', function($http) {
+.factory('geo', function($http, $cordovaGeolocation) {
     return {
         getAddressFromGeoLocation: function(lat, lng, callback) {
             apiKey = 'AIzaSyAEKs4ZY-sOsDnaq-M27MiOfhWK4dJfDSg';
@@ -99,9 +99,19 @@ angular.module('starter', ['ionic', 'ngCordova', 'google-maps', 'starter.control
                     else {
                         address = "unknown";
                     };
-                    callback(address);
+                    callback && callback(address);
             });
-        }
+        },
+
+        getGeoLocation: function(callback, callbackerr) {
+            $cordovaGeolocation.getCurrentPosition().then(function(position) {
+                var lat = parseFloat(position.coords.latitude);
+                var lng = parseFloat(position.coords.longitude);
+                callback && callback(lat, lng);
+            }, function(err) {
+                callbackerr && callbackerr("unable to determine location");
+            });
+        },
     }
 })
 

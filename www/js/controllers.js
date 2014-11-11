@@ -44,18 +44,25 @@ angular.module('starter.controllers',[])
     }
 }])
 
-.controller('DashCtrl',['$scope','data', '$state', 'localstorage', function($scope,data,$state, localstorage){
+.controller('DashCtrl',['$scope','data', '$state', 'localstorage', 'geo', function($scope,data,$state, localstorage, geo){
     localstorage.set('state','tab.dash');
     $scope.state = $state;
     $scope.device = data.device
     $scope.name = data.user.name;
     $scope.phone = data.user.phone;
+    geo.getGeoLocation(function(lat, lng){
+        geo.getAddressFromGeoLocation(lat, lng, function(address) {
+            $scope.address = address;
+        });
+    }, function(err) {
+        $scope.address = "unknown";
+    });
     $scope.request=function(){
         data.socket.emit('rider:request', {name:data.user.name, phone:data.user.phone});
     }
 }])
 
-.controller('MapCtrl', function($scope, $http, $cordovaGeolocation, localstorage, data, geo) {
+.controller('MapCtrl', function($scope, $http, localstorage, data, geo) {
     localstorage.set('state','tab.map');
     $scope.msg = "";
     $scope.coords = [0,0];
@@ -74,25 +81,20 @@ angular.module('starter.controllers',[])
         $scope.mapVisible =true;
     };
 
-    var getGeoLocation = function() {
-        $cordovaGeolocation.getCurrentPosition().then(function(position) {
-            $scope.msg = position.coords.latitude + ":" + position.coords.longitude;
-            var lat = parseFloat(position.coords.latitude);
-            var lng = parseFloat(position.coords.longitude);
+    var init = function () {
+        var mapOptions = {};
+        var map = new google.maps.Map(document.getElementById("map"), mapOptions);
+        $scope.map = map;
+        geo.getGeoLocation(function(lat, lng){
+            $scope.msg = lat + ":" + lng;
             updateCenter(lat, lng);
             geo.getAddressFromGeoLocation(lat, lng, function(address) {
                 $scope.address = address;
             });
         }, function(err) {
-            $scope.msg = "unable to determine location";
+            $scope.msg = err;
+            $scope.address = "unknown";
         });
-    };
-
-    var init = function () {
-        var mapOptions = {};
-        var map = new google.maps.Map(document.getElementById("map"), mapOptions);
-        $scope.map = map;
-        getGeoLocation();
     };
 
     init();
