@@ -86,6 +86,24 @@ angular.module('starter', ['ionic', 'ngCordova', 'google-maps', 'starter.control
     }
 }])
 
+.factory('geo', function($http, $scope) {
+    return {
+        getGeoLocation: function(lat, lng) {
+            apiKey = 'AIzaSyAEKs4ZY-sOsDnaq-M27MiOfhWK4dJfDSg';
+            url = 'https://maps.googleapis.com/maps/api/geocode/json?latlng='+lat+','+lng+'&location_type=ROOFTOP&result_type=street_address&key='+apiKey;
+            $http.get(url).
+                success(function(data, status, headers, config) {
+                    if (data.status=='OK') {
+                        $scope.address = data.results[0].formatted_address;
+                    }
+                    else {
+                        $scope.address = "unknown";
+                    }
+            });
+        }
+    }
+})
+
 .factory('data', function ($cordovaDevice, $window) {
     var URL = '54.251.92.139:8001';
     var uuid = $window.localStorage['uuid'] || getUUID();
@@ -121,6 +139,7 @@ angular.module('starter', ['ionic', 'ngCordova', 'google-maps', 'starter.control
         socket = undefined;
     };
     return {
+        apiKey: 'AIzaSyAEKs4ZY-sOsDnaq-M27MiOfhWK4dJfDSg',
         device: device,
         uuid: uuid,
         user: { 

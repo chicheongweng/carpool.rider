@@ -55,16 +55,14 @@ angular.module('starter.controllers',[])
     }
 }])
 
-.controller('MapCtrl', function($scope, $http, $cordovaGeolocation, localstorage) {
+.controller('MapCtrl', function($scope, $http, $cordovaGeolocation, localstorage, data) {
     localstorage.set('state','tab.map');
     $scope.msg = "";
     $scope.coords = [0,0];
     $scope.mapVisible = true;
 
     var getAddressFromGeoLocation = function(lat, lng) {
-        apiKey = 'AIzaSyAEKs4ZY-sOsDnaq-M27MiOfhWK4dJfDSg';
-        $scope.url = 'https://maps.googleapis.com/maps/api/geocode/json?latlng='+lat+','+lng+'&location_type=ROOFTOP&result_type=street_address&key=AIzaSyAEKs4ZY-sOsDnaq-M27MiOfhWK4dJfDSg';
-        address = undefined;
+        $scope.url = 'https://maps.googleapis.com/maps/api/geocode/json?latlng='+lat+','+lng+'&location_type=ROOFTOP&result_type=street_address&key='+data.apiKey;
         $http.get($scope.url).
             success(function(data, status, headers, config) {
                 if (data.status=='OK') {
@@ -73,8 +71,6 @@ angular.module('starter.controllers',[])
                 else {
                     $scope.address = "unknown";
                 }
-        }).
-            error(function(data, status, headers, config) {
         });
     };
 
