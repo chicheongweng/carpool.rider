@@ -23,9 +23,12 @@ angular.module('starter.controllers',[])
             data.socket.socket.reconnect();
         } else {
             data.socket = io.connect(data.URL, data.params);
-            data.socket.on('connect', function() {
-                data.socket.emit('rider:signin', {user:$scope.user, device:data.device});
-            });
+            if (!data.signinlistenerAdded) {
+                data.signinlistenerAdded = true;
+                data.socket.on('connect', function() {
+                    data.socket.emit('rider:signin', {user:$scope.user, device:data.device});
+                });
+            }
             data.signinFlag = true;
         }
         $state.go('tab.dash');
@@ -33,7 +36,6 @@ angular.module('starter.controllers',[])
     $scope.signout=function(){
         data.socket.disconnect();
         data.connstate='signout';
-        data.listenerAdded = false;
         localstorage.remove('state');
         localstorage.remove('connstate');
     }
