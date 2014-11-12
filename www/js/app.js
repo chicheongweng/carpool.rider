@@ -8,6 +8,24 @@ function getUUID() {
     return u.toUpperCase();
 };
 
+function checkConnection() {
+    if (window.cordova) {
+        var networkState = navigator.connection.type;
+        var states = {};
+        states[Connection.UNKNOWN]  = false;
+        states[Connection.ETHERNET] = true;
+        states[Connection.WIFI]     = true;
+        states[Connection.CELL_2G]  = true;
+        states[Connection.CELL_3G]  = true;
+        states[Connection.CELL_4G]  = true;
+        states[Connection.CELL]     = true;
+        states[Connection.NONE]     = false;
+        return states[networkState];
+    } else {
+        return navigator.onLine;
+    };
+};
+
 angular.module('starter', ['ionic', 'ngCordova', 'google-maps', 'starter.controllers', 'starter.services', 'starter.directives'])
 
 .run(function($ionicPlatform, $rootScope, $state, $window) {
@@ -18,6 +36,18 @@ angular.module('starter', ['ionic', 'ngCordova', 'google-maps', 'starter.control
     if(window.StatusBar) {
       StatusBar.styleDefault();
     }
+
+    $rootScope.online = checkConnection();
+    $window.addEventListener("offline", function () {
+        $rootScope.$apply(function() {
+            $rootScope.online = false;
+        });
+    }, false);
+    $window.addEventListener("online", function () {
+        $rootScope.$apply(function() {
+            $rootScope.online = true;
+        });
+    }, false);
 
     var state = $window.localStorage['state'] || 'tab.account';
     $state.go(state);
