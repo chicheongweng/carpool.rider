@@ -62,7 +62,8 @@ angular.module('starter', ['ionic', 'ngCordova', 'google-maps', 'starter.control
     .state('tab', {
       url: "/tab",
       abstract: true,
-      templateUrl: "templates/tabs.html"
+      templateUrl: 'templates/tabs.html',
+      controller: 'TabCtrl'
     })
 
     .state('tab.dash', {

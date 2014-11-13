@@ -1,4 +1,9 @@
 angular.module('starter.controllers',[])
+.controller('TabCtrl',['$scope', 'data', function($scope, data) {
+    $scope.isSignIn = function() {
+        return data.connstate == 'signin';
+    }
+}])
 .controller('AccountCtrl',['$scope','data','$state', 'localstorage', function($scope,data,$state, localstorage){
     localstorage.set('state','tab.account');
     $scope.device = data.device;
