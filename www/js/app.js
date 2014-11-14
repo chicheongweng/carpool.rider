@@ -168,6 +168,15 @@ angular.module('starter', ['ionic', 'ngCordova', 'google-maps', 'starter.control
         };
     }; 
     socket = io.connect(URL, {'reconnection limit': 5000});
+    socket.on('disconnect', function() {
+        socketConnectTimeInterval = setInterval(function () {
+            socket.socket.reconnect();
+            if(socket.socket.connected) {
+                clearInterval(socketConnectTimeInterval);
+            }
+        }, 3000);
+    });
+
     return {
         apiKey: 'AIzaSyAEKs4ZY-sOsDnaq-M27MiOfhWK4dJfDSg',
         device: device,
