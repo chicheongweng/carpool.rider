@@ -154,8 +154,6 @@ angular.module('starter', ['ionic', 'ngCordova', 'google-maps', 'starter.control
     var name = $window.localStorage['name'] || undefined;
     var phone = $window.localStorage['phone'] || undefined;
     var connstate = $window.localStorage['connstate'] || 'signout';
-    var signinlistenerAdded = false;
-    var signinFlag = false;
     try {
         device = $cordovaDevice.getDevice();
         device.uuid = device.uuid.toLowerCase();
@@ -169,17 +167,7 @@ angular.module('starter', ['ionic', 'ngCordova', 'google-maps', 'starter.control
             model: undefined
         };
     }; 
-    if (connstate == 'signin') {
-        socket = io.connect(URL);
-        signinlistenerAdded = true;
-        signinFlag = true;
-        socket.on('connect', function() {
-            console.log('rider: add connect listener in app.js');
-            socket.emit('rider:signin', {user: {name: name, phone: phone}, device: device});
-        });
-    } else {
-        socket = undefined;
-    };
+    socket = io.connect(URL, {'reconnection limit': 5000});
     return {
         apiKey: 'AIzaSyAEKs4ZY-sOsDnaq-M27MiOfhWK4dJfDSg',
         device: device,
@@ -191,11 +179,8 @@ angular.module('starter', ['ionic', 'ngCordova', 'google-maps', 'starter.control
         URL: URL,
         params: {'reconnection limit': 5000},
         socket: socket,
-        requestlistenerAdded: false,
-        signinlistenerAdded: signinlistenerAdded,
         connstate: connstate,
         state: $window.localStorage['state'] || 'tab.account',
-        signinFlag: signinFlag,
     };
 });
 
