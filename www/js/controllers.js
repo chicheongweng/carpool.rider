@@ -1,7 +1,7 @@
 angular.module('starter.controllers',[])
 .controller('TabCtrl',['$scope', 'data', function($scope, data) {
     $scope.isSignIn = function() {
-        return data.connstate == 'signin';
+        return data.connstate.state=='signin';
     }
 }])
 .controller('AccountCtrl',['$scope','data','$state', 'localstorage', function($scope,data,$state, localstorage){
@@ -20,21 +20,21 @@ angular.module('starter.controllers',[])
         }
         data.user.name=$scope.user.name;
         data.user.phone=$scope.user.phone;
-        data.connstate='signin';
+        data.connstate.state='signin';
         localstorage.set('name', data.user.name);
         localstorage.set('phone', data.user.phone);
-        localstorage.set('connstate',data.connstate);
-        data.socket.emit('rider:signin', {user:$scope.user, device:data.device});
+        localstorage.set('connstate',data.connstate.state);
+        data.socket.emit('ride:signin', {user:$scope.user, device:data.device});
         $state.go('tab.dash');
     }
     $scope.signout=function(){
         data.socket.emit('rider:signout', {user:$scope.user, device:data.device});
-        data.connstate='signout';
+        data.connstate.state='signout';
         localstorage.remove('state');
         localstorage.remove('connstate');
     }
     $scope.isSignIn=function(){
-        return data.connstate=='signin';
+        return data.connstate.state=='signin';
     }
 }])
 

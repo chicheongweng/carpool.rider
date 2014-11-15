@@ -151,9 +151,13 @@ angular.module('starter', ['ionic', 'ngCordova', 'google-maps', 'starter.control
     var uuid = $window.localStorage['uuid'] || getUUID();
     var device;
     var socket;
-    var name = $window.localStorage['name'] || undefined;
-    var phone = $window.localStorage['phone'] || undefined;
-    var connstate = $window.localStorage['connstate'] || 'signout';
+    var user = { 
+        name:$window.localStorage['name'] || undefined,
+        phone:$window.localStorage['phone'] || undefined
+    }
+    var connstate = {
+        state:$window.localStorage['connstate'] || 'signout'
+    }
     try {
         device = $cordovaDevice.getDevice();
         device.uuid = device.uuid.toLowerCase();
@@ -172,6 +176,9 @@ angular.module('starter', ['ionic', 'ngCordova', 'google-maps', 'starter.control
         socketConnectTimeInterval = setInterval(function () {
             socket.socket.reconnect();
             if(socket.socket.connected) {
+                if (connstate.state=='signin') {
+                    socket.emit('rider:update', {user:user, device:device});
+                }
                 clearInterval(socketConnectTimeInterval);
             }
         }, 3000);
@@ -181,10 +188,7 @@ angular.module('starter', ['ionic', 'ngCordova', 'google-maps', 'starter.control
         apiKey: 'AIzaSyAEKs4ZY-sOsDnaq-M27MiOfhWK4dJfDSg',
         device: device,
         uuid: uuid,
-        user: { 
-            name: name,
-            phone: phone
-        },
+        user: user,
         URL: URL,
         params: {'reconnection limit': 5000},
         socket: socket,
