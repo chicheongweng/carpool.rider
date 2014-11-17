@@ -4,7 +4,7 @@ angular.module('starter.controllers',[])
         return data.connstate.state=='signin';
     }
 }])
-.controller('AccountCtrl',['$scope','data','$state', 'localstorage', function($scope,data,$state, localstorage){
+.controller('AccountCtrl',['$rootScope','$scope','data','$state', 'localstorage', function($rootScope,$scope,data,$state, localstorage){
     localstorage.set('state','tab.account');
     $scope.device = data.device;
     $scope.user={};
