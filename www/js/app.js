@@ -171,8 +171,19 @@ angular.module('starter', ['ionic', 'ngCordova', 'google-maps', 'starter.control
             model: undefined
         };
     }; 
-    socket = io.connect(URL, {'reconnection limit': 5000});
+    socket = io.connect(URL, {'reconnection limit': 5000, 'max reconnection attempts': Infinity});
     socket.on('disconnect', function() {
+        socketConnectTimeInterval = setInterval(function () {
+            socket.socket.reconnect();
+            if(socket.socket.connected) {
+                if (connstate.state=='signin') {
+                    socket.emit('rider:update', {user:user, device:device});
+                }
+                clearInterval(socketConnectTimeInterval);
+            }
+        }, 3000);
+    });
+    socket.on('connect_failed', function() {
         socketConnectTimeInterval = setInterval(function () {
             socket.socket.reconnect();
             if(socket.socket.connected) {
