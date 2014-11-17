@@ -201,8 +201,11 @@ angular.module('starter', ['ionic', 'ngCordova', 'google-maps', 'starter.control
         }, 3000);
     });
     socket.on('requestack', function(data) {
-        var message = {date:Date(), message:'Request sent to name: '+data.user.name+', phone: '+data.user.phone};
-        $rootScope.messages.unshift(message);
+        $rootScope.$apply(function(){
+            var message = {date:Date(), message:'Request sent to name: '+data.user.name+', phone: '+data.user.phone};
+            data.date = Date();
+            $rootScope.messages.unshift(data);
+        });
     });
 
     return {
