@@ -203,8 +203,8 @@ angular.module('starter', ['ionic', 'ngCordova', 'google-maps', 'starter.control
     socket.on('requestack', function(data) {
         $rootScope.$apply(function(){
             var message = {date:Date(), message:'Request sent to name: '+data.user.name+', phone: '+data.user.phone};
-            data.date = Date();
-            $rootScope.messages.unshift(data);
+            message.date = Date();
+            $rootScope.messages.unshift(message);
         });
     });
 
