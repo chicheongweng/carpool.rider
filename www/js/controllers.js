@@ -76,6 +76,14 @@ angular.module('starter.controllers',[])
         $scope.mapVisible =true;
     };
 
+    var updateMarker = function(lat, lng, map) {
+        var marker = new google.maps.Marker({
+            position: new google.maps.LatLng(lat,lng),
+            map: map,
+            title: 'Current Location'
+        });
+    };
+
     var init = function () {
         var mapOptions = {};
         var map = new google.maps.Map(document.getElementById("map"), mapOptions);
@@ -83,6 +91,7 @@ angular.module('starter.controllers',[])
         geo.getGeoLocation(function(lat, lng){
             $scope.msg = lat + ":" + lng;
             updateCenter(lat, lng);
+            updateMarker(lat, lng, map);
             geo.getAddressFromGeoLocation(lat, lng, function(address) {
                 $scope.address = address;
             });
