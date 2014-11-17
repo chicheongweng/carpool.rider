@@ -173,6 +173,11 @@ angular.module('starter', ['ionic', 'ngCordova', 'google-maps', 'starter.control
         };
     }; 
     socket = io.connect(URL, {'reconnection limit': 5000, 'max reconnection attempts': Infinity});
+    socket.on('connect', function() {
+        if (connstate.state == 'signin') {
+            socket.emit('driver:update', {user:user, device:device});
+        }
+    });
     socket.on('disconnect', function() {
         socketConnectTimeInterval = setInterval(function () {
             socket.socket.reconnect();
