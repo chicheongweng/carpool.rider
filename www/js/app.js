@@ -146,7 +146,7 @@ angular.module('starter', ['ionic', 'ngCordova', 'google-maps', 'starter.control
     }
 })
 
-.factory('data', function ($cordovaDevice, $window) {
+.factory('data', function ($cordovaDevice, $window, $rootScope) {
     var URL = '54.251.92.139:8001';
     var uuid = $window.localStorage['uuid'] || getUUID();
     var device;
@@ -158,6 +158,7 @@ angular.module('starter', ['ionic', 'ngCordova', 'google-maps', 'starter.control
     var connstate = {
         state:$window.localStorage['connstate'] || 'signout'
     }
+    $rootScope.messages = []; 
     try {
         device = $cordovaDevice.getDevice();
         device.uuid = device.uuid.toLowerCase();
@@ -193,6 +194,10 @@ angular.module('starter', ['ionic', 'ngCordova', 'google-maps', 'starter.control
                 clearInterval(socketConnectTimeInterval);
             }
         }, 3000);
+    });
+    socket.on('requestack', function(data) {
+        var message = {date:Date(), message:'Request sent to name: '+data.user.name+', phone: '+data.user.phone};
+        $rootScope.messages.unshift(message);
     });
 
     return {

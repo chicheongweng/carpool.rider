@@ -28,6 +28,7 @@ angular.module('starter.controllers',[])
         $state.go('tab.dash');
     }
     $scope.signout=function(){
+        $rootScope.messages = [];
         data.socket.emit('rider:signout', {user:$scope.user, device:data.device});
         data.connstate.state='signout';
         localstorage.remove('state');
@@ -38,7 +39,7 @@ angular.module('starter.controllers',[])
     }
 }])
 
-.controller('DashCtrl',['$scope','data', '$state', 'localstorage', 'geo', function($scope,data,$state, localstorage, geo){
+.controller('DashCtrl',['$rootScope','$scope','data', '$state', 'localstorage', 'geo', function($rootScope,$scope,data,$state,localstorage,geo){
     localstorage.set('state','tab.dash');
     $scope.state = $state;
     $scope.device = data.device
