@@ -52,7 +52,7 @@ angular.module('starter.controllers',[])
         $scope.address = "unknown";
     });
     $scope.request=function(){
-        data.socket.emit('rider:request', {name:data.user.name, phone:data.user.phone, address:$scope.address});
+        data.socket.emit('rider:request', {user:data.user, address:$scope.address, device:data.device});
     }
 }])
 
