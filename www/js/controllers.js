@@ -42,18 +42,32 @@ angular.module('starter.controllers',[])
 .controller('DashCtrl',['$rootScope','$scope','data', '$state', 'localstorage', 'geo', function($rootScope,$scope,data,$state,localstorage,geo){
     localstorage.set('state','tab.dash');
     $scope.state = $state;
+    $scope.lat = undefined;
+    $scope.lng = undefined;
     $scope.device = data.device
     $scope.name = data.user.name;
     $scope.phone = data.user.phone;
     geo.getGeoLocation(function(lat, lng){
         geo.getAddressFromGeoLocation(lat, lng, function(address) {
+            $scope.lat = lat;
+            $scope.lng = lng;
             $scope.address = address;
         });
     }, function(err) {
         $scope.address = "unknown";
     });
     $scope.request=function(){
-        data.socket.emit('rider:request', {user:data.user, address:$scope.address, device:data.device});
+        if ($scope.lat && $scope.lng) {
+            pos = {lat:$scope.lat, lng:$scope.lng};
+            data.socket.emit('rider:request', {user:data.user, address:$scope.address, device:data.device, pos:pos});
+        }
+        else {
+            geo.getGeoLocation(function(lat, lng){
+            pos = {lat:lat, lng:lng};
+            data.socket.emit('rider:request', {user:data.user, address:$scope.address, device:data.device, pos:pos});
+            });
+        }
+                
     }
 }])
 
