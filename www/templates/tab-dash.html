@@ -14,7 +14,7 @@
         <div><b>Total requests sent:</b> {{messages.length}}</div>
         <div class="list">
             <a class="item item-text-wrap" href="#" ng-repeat="message in messages track by $index">
-                <div>{{message.date}}:</br>{{message.message}}</div>
+                <div>{{message.date}}: Request sent. Driver name: {{message.user.name}}. Driver phone: {{message.user.phone}}. Estimated distance: {{message.distance.text}}. Estimated duration: {{message.duration.text}}.</div>
             </a>
         </div>
     </ion-content>
