@@ -200,11 +200,12 @@ angular.module('starter', ['ionic', 'ngCordova', 'google-maps', 'starter.control
             }
         }, 3000);
     });
-    socket.on('requestack', function(data) {
+    socket.on('requestack', function(data, callback) {
         $rootScope.$apply(function(){
             data.date = Date();
             $rootScope.messages.unshift(data);
         });
+        callback(true);
     });
 
     return {
