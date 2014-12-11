@@ -1,0 +1,48 @@
+<ion-view title="Get Me A Cab (Rider)">
+<ion-content class="padding">
+
+<div><b>Device id:</b>  {{device.uuid}}</div>
+<div><b>Platform:</b>  {{device.platform}}</div>
+<div><b>Model:</b>  {{device.model}}</div>
+<div><b>Version:</b>  {{device.version}}</div>
+
+<div ng-hide="isSignIn()">
+    <div class="card">
+        <div class="item item-divider">
+            Rider name
+        </div>
+        <div class="item item-text-wrap">
+            <input type="text" placeholder="Enter your name" ng-model="user.name"/>
+        </div>
+    </div>
+    <div class="card">
+        <div class="item item-divider">
+            Rider phone number
+        </div>
+        <div class="item item-text-wrap">
+            <input type="tel" placeholder="Enter your phone number" ng-model="user.phone"/>
+        </div>
+    </div>
+    <div class="content padding">
+        <button class="button button-positive button-block" ng-click="signin()">
+            Signin
+        </button>
+    </div>
+</div>
+
+<div ng-show="isSignIn()">
+    <div>
+        <b>Rider name:</b> {{user.name}}
+    </div>
+    <div>
+        <b>Rider phone number:</b> {{user.phone}}
+    </div>
+    <div class="content padding">
+        <button class="button button-positive button-block" ng-click="signout()">
+            Signout
+        </button>
+    </div>
+</div>
+
+</ion-content>
+</ion-view>

@@ -21,6 +21,10 @@
                             "count": 1
                         },
                         {
+                            "xml": "<feature name=\"Geolocation\"><param name=\"ios-package\" value=\"CDVLocation\" /></feature>",
+                            "count": 1
+                        },
+                        {
                             "xml": "<feature name=\"NetworkStatus\"><param name=\"ios-package\" value=\"CDVConnection\" /></feature>",
                             "count": 1
                         }
@@ -29,9 +33,25 @@
             },
             "framework": {
                 "parents": {
+                    "CoreLocation.framework": [
+                        {
+                            "xml": "false",
+                            "count": 1
+                        }
+                    ],
                     "SystemConfiguration.framework": [
                         {
                             "xml": "true",
+                            "count": 1
+                        }
+                    ]
+                }
+            },
+            "*-Info.plist": {
+                "parents": {
+                    "NSLocationWhenInUseUsageDescription": [
+                        {
+                            "xml": "<string />",
                             "count": 1
                         }
                     ]
@@ -41,16 +61,19 @@
     },
     "installed_plugins": {
         "com.ionic.keyboard": {
-            "PACKAGE_NAME": "com.ionicframework.getmeacabrider682699"
+            "PACKAGE_NAME": "com.musiclifeltd.GetMeACab.Rider"
         },
         "org.apache.cordova.console": {
-            "PACKAGE_NAME": "com.ionicframework.getmeacabrider682699"
+            "PACKAGE_NAME": "com.musiclifeltd.GetMeACab.Rider"
         },
         "org.apache.cordova.device": {
-            "PACKAGE_NAME": "com.ionicframework.getmeacabrider682699"
+            "PACKAGE_NAME": "com.musiclifeltd.GetMeACab.Rider"
+        },
+        "org.apache.cordova.geolocation": {
+            "PACKAGE_NAME": "com.musiclifeltd.GetMeACab.Rider"
         },
         "org.apache.cordova.network-information": {
-            "PACKAGE_NAME": "com.ionicframework.getmeacabrider682699"
+            "PACKAGE_NAME": "com.musiclifeltd.GetMeACab.Rider"
         }
     },
     "dependent_plugins": {}

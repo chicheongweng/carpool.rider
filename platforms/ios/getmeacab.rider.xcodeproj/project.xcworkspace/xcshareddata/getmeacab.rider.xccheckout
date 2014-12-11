@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>8335C3C2-4C6B-4D51-84AD-971071843645</string>
+	<key>IDESourceControlProjectName</key>
+	<string>getmeacab.rider</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>DE892DFB92CC9397E3FE6D6B8BDBE009F402457B</key>
+		<string>bitbucket.org:chicheongweng/getmeacab.rider.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>platforms/ios/getmeacab.rider.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>DE892DFB92CC9397E3FE6D6B8BDBE009F402457B</key>
+		<string>../../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>bitbucket.org:chicheongweng/getmeacab.rider.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>DE892DFB92CC9397E3FE6D6B8BDBE009F402457B</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>DE892DFB92CC9397E3FE6D6B8BDBE009F402457B</string>
+			<key>IDESourceControlWCCName</key>
+			<string>getmeacab.rider</string>
+		</dict>
+	</array>
+</dict>
+</plist>
