@@ -152,7 +152,7 @@ angular.module('starter', ['ionic', 'ngCordova', 'google-maps', 'starter.control
     }
 })
 
-.factory('data', function ($cordovaDevice, $window, $rootScope, $cordovaKeychain) {
+.factory('data', function ($cordovaDevice, $window, $rootScope, $cordovaNativeAudio, $cordovaKeychain) {
     var URL = '54.251.92.139:8001';
     var device;
     var socket;
