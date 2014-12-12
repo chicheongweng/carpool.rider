@@ -154,7 +154,6 @@ angular.module('starter', ['ionic', 'ngCordova', 'google-maps', 'starter.control
 
 .factory('data', function ($cordovaDevice, $window, $rootScope, $cordovaNativeAudio, $timeout) {
     var URL = '54.251.92.139:8001';
-    var uuid = $window.localStorage['uuid'] || getUUID();
     var device;
     var socket;
     var user = { 
@@ -173,7 +172,7 @@ angular.module('starter', ['ionic', 'ngCordova', 'google-maps', 'starter.control
         device = {available: true,
             platform: undefined,
             version: undefined,
-            uuid: uuid,
+            uuid: getUUID(),
             cordova: undefined,
             model: undefined
         };
@@ -218,7 +217,6 @@ angular.module('starter', ['ionic', 'ngCordova', 'google-maps', 'starter.control
     return {
         apiKey: 'AIzaSyAEKs4ZY-sOsDnaq-M27MiOfhWK4dJfDSg',
         device: device,
-        uuid: uuid,
         user: user,
         URL: URL,
         params: {'reconnection limit': 5000},
