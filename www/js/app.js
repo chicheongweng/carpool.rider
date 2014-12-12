@@ -152,7 +152,7 @@ angular.module('starter', ['ionic', 'ngCordova', 'google-maps', 'starter.control
     }
 })
 
-.factory('data', function ($cordovaDevice, $window, $rootScope, $cordovaNativeAudio, $timeout) {
+.factory('data', function ($cordovaDevice, $window, $rootScope, $cordovaKeychain) {
     var URL = '54.251.92.139:8001';
     var device;
     var socket;
@@ -167,6 +167,25 @@ angular.module('starter', ['ionic', 'ngCordova', 'google-maps', 'starter.control
     try {
         device = $cordovaDevice.getDevice();
         device.uuid = device.uuid.toLowerCase();
+        if (device.platform == 'iOS') {
+        console.log("calling $cordovaKeychain");
+        $cordovaKeychain.getForKey('uuid','servicename')
+        .then(
+            function(value) {
+            console.log("$cordovaKeychain getForKey succeeded");
+            device.uuid = value;
+            },
+            function(err) {
+                console.log("$cordovaKeychain getForKey failed");
+                $cordovaKeychain.setForKey('uuid','servicename',device.uuid.toLowerCase())
+                .then(function(value) {
+                    console.log("$cordovaKeychain setForKey succeeded");
+                },
+                function(err) {
+                    console.log("$cordovaKeychain setForKey failed");
+                });
+            });
+        }
     }
     catch(err) {
         device = {available: true,
