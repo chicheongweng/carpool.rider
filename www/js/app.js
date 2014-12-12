@@ -36,7 +36,7 @@ angular.module('starter', ['ionic', 'ngCordova', 'google-maps', 'starter.control
     if(window.StatusBar) {
       StatusBar.styleDefault();
     }
-    $cordovaNativeAudio.preloadSimple('bell', 'audio/doorbell.mp3')
+    $cordovaNativeAudio.preloadSimple('bell', 'audio/rider.mp3')
     .then(function (msg) {
         console.log(msg);
     }, function (error) {
