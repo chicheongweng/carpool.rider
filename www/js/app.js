@@ -28,7 +28,7 @@ function checkConnection() {
 
 angular.module('starter', ['ionic', 'ngCordova', 'google-maps', 'starter.controllers', 'starter.services', 'starter.directives'])
 
-.run(function($ionicPlatform, $rootScope, $state, $window) {
+.run(function($ionicPlatform, $rootScope, $state, $window, $cordovaNativeAudio) {
   $ionicPlatform.ready(function() {
     if(window.cordova && window.cordova.plugins.Keyboard) {
       cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
@@ -36,6 +36,12 @@ angular.module('starter', ['ionic', 'ngCordova', 'google-maps', 'starter.control
     if(window.StatusBar) {
       StatusBar.styleDefault();
     }
+    $cordovaNativeAudio.preloadSimple('bell', 'audio/doorbell.mp3')
+    .then(function (msg) {
+        console.log(msg);
+    }, function (error) {
+        alert(error);
+    });
 
     $rootScope.online = checkConnection();
     $window.addEventListener("offline", function () {
@@ -146,7 +152,7 @@ angular.module('starter', ['ionic', 'ngCordova', 'google-maps', 'starter.control
     }
 })
 
-.factory('data', function ($cordovaDevice, $window, $rootScope) {
+.factory('data', function ($cordovaDevice, $window, $rootScope, $cordovaNativeAudio, $timeout) {
     var URL = '54.251.92.139:8001';
     var uuid = $window.localStorage['uuid'] || getUUID();
     var device;
@@ -206,6 +212,7 @@ angular.module('starter', ['ionic', 'ngCordova', 'google-maps', 'starter.control
             $rootScope.messages.unshift(data);
         });
         callback(true);
+        $cordovaNativeAudio.play('bell');
     });
 
     return {

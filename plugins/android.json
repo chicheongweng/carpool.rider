@@ -13,6 +13,10 @@
                             "count": 1
                         },
                         {
+                            "xml": "<feature name=\"NativeAudio\"><param name=\"android-package\" value=\"de.neofonie.cordova.plugin.nativeaudio.NativeAudio\" /></feature>",
+                            "count": 1
+                        },
+                        {
                             "xml": "<feature name=\"Device\"><param name=\"android-package\" value=\"org.apache.cordova.device.Device\" /></feature>",
                             "count": 1
                         },
@@ -26,6 +30,18 @@
             "AndroidManifest.xml": {
                 "parents": {
                     "/*": [
+                        {
+                            "xml": "<uses-permission name=\"android.permission.MODIFY_AUDIO_SETTINGS\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<uses-permission name=\"android.permission.WRITE_EXTERNAL_STORAGE\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<uses-permission name=\"android.permission.READ_PHONE_STATE\" />",
+                            "count": 1
+                        },
                         {
                             "xml": "<uses-permission android:name=\"android.permission.ACCESS_COARSE_LOCATION\" />",
                             "count": 1
@@ -47,6 +63,9 @@
         "com.ionic.keyboard": {
             "PACKAGE_NAME": "com.musiclifeltd.GetMeACab.Rider"
         },
+        "de.neofonie.cordova.plugin.nativeaudio": {
+            "PACKAGE_NAME": "com.musiclifeltd.GetMeACab.Rider"
+        },
         "org.apache.cordova.console": {
             "PACKAGE_NAME": "com.musiclifeltd.GetMeACab.Rider"
         },
@@ -57,6 +76,9 @@
             "PACKAGE_NAME": "com.musiclifeltd.GetMeACab.Rider"
         },
         "org.apache.cordova.network-information": {
+            "PACKAGE_NAME": "com.musiclifeltd.GetMeACab.Rider"
+        },
+        "com.shazron.cordova.plugin.keychainutil": {
             "PACKAGE_NAME": "com.musiclifeltd.GetMeACab.Rider"
         }
     },

@@ -13,6 +13,10 @@
                             "count": 1
                         },
                         {
+                            "xml": "<feature name=\"NativeAudio\"><param name=\"ios-package\" value=\"NativeAudio\" /></feature>",
+                            "count": 1
+                        },
+                        {
                             "xml": "<feature name=\"Console\"><param name=\"ios-package\" value=\"CDVLogger\" /></feature>",
                             "count": 1
                         },
@@ -28,11 +32,35 @@
                             "xml": "<feature name=\"NetworkStatus\"><param name=\"ios-package\" value=\"CDVConnection\" /></feature>",
                             "count": 1
                         }
+                    ],
+                    "/widget": [
+                        {
+                            "xml": "<feature name=\"Keychain\"><param name=\"ios-package\" value=\"CDVKeychain\" /></feature>",
+                            "count": 1
+                        }
                     ]
                 }
             },
             "framework": {
                 "parents": {
+                    "Foundation.framework": [
+                        {
+                            "xml": "false",
+                            "count": 1
+                        }
+                    ],
+                    "AVFoundation.framework": [
+                        {
+                            "xml": "false",
+                            "count": 1
+                        }
+                    ],
+                    "AudioToolbox.framework": [
+                        {
+                            "xml": "false",
+                            "count": 1
+                        }
+                    ],
                     "CoreLocation.framework": [
                         {
                             "xml": "false",
@@ -42,6 +70,12 @@
                     "SystemConfiguration.framework": [
                         {
                             "xml": "true",
+                            "count": 1
+                        }
+                    ],
+                    "Security.framework": [
+                        {
+                            "xml": "false",
                             "count": 1
                         }
                     ]
@@ -63,6 +97,9 @@
         "com.ionic.keyboard": {
             "PACKAGE_NAME": "com.musiclifeltd.GetMeACab.Rider"
         },
+        "de.neofonie.cordova.plugin.nativeaudio": {
+            "PACKAGE_NAME": "com.musiclifeltd.GetMeACab.Rider"
+        },
         "org.apache.cordova.console": {
             "PACKAGE_NAME": "com.musiclifeltd.GetMeACab.Rider"
         },
@@ -73,6 +110,9 @@
             "PACKAGE_NAME": "com.musiclifeltd.GetMeACab.Rider"
         },
         "org.apache.cordova.network-information": {
+            "PACKAGE_NAME": "com.musiclifeltd.GetMeACab.Rider"
+        },
+        "com.shazron.cordova.plugin.keychainutil": {
             "PACKAGE_NAME": "com.musiclifeltd.GetMeACab.Rider"
         }
     },
