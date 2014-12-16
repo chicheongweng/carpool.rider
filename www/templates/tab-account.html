@@ -1,10 +1,10 @@
 <ion-view title="Get Me A Cab (Rider)">
 <ion-content class="padding">
 
-<div><b>Device id:</b>  {{device.uuid}}</div>
-<div><b>Platform:</b>  {{device.platform}}</div>
-<div><b>Model:</b>  {{device.model}}</div>
-<div><b>Version:</b>  {{device.version}}</div>
+<div><h3><b>Device id:</b>  {{device.uuid}}</h3></div>
+<div><h3><b>Platform:</b>  {{device.platform}}</h3></div>
+<div><h3><b>Model:</b>  {{device.model}}</h3></div>
+<div><h3><b>Version:</b>  {{device.version}}</h3></div>
 
 <div ng-hide="isSignIn()">
     <div class="card">
@@ -25,7 +25,7 @@
     </div>
     <div class="content padding">
         <button class="button button-positive button-block" ng-click="signin()">
-            Signin
+            <h3>Signin</h3>
         </button>
     </div>
 </div>
@@ -39,7 +39,7 @@
     </div>
     <div class="content padding">
         <button class="button button-positive button-block" ng-click="signout()">
-            Signout
+            <h3>Signout</h3>
         </button>
     </div>
 </div>
