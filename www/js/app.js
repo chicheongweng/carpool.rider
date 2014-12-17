@@ -153,6 +153,7 @@ angular.module('starter', ['ionic', 'ngCordova', 'google-maps', 'starter.control
 })
 
 .factory('data', function ($cordovaDevice, $window, $rootScope, $cordovaNativeAudio, $cordovaKeychain) {
+    $rootScope.requestDisabled = false;
     var URL = '54.251.92.139:8001';
     var device;
     var socket;
@@ -224,12 +225,27 @@ angular.module('starter', ['ionic', 'ngCordova', 'google-maps', 'starter.control
             }
         }, 3000);
     });
-    socket.on('requestack', function(data, callback) {
+    socket.on('requestack:accepted', function(data, callback) {
         $rootScope.$apply(function(){
             data.date = Date();
             $rootScope.messages.unshift(data);
+            $rootScope.requestDisabled = false;
         });
         callback(true);
+        $cordovaNativeAudio.play('bell');
+    });
+    socket.on('requestack:ignored', function(data, callback) {
+        callback(true);
+        $rootScope.$apply(function(){
+            $rootScope.requestDisabled = false;
+        });
+        $cordovaNativeAudio.play('bell');
+    });
+    socket.on('requestack:unavail', function(data, callback) {
+        callback(true);
+        $rootScope.$apply(function(){
+            $rootScope.requestDisabled = false;
+        });
         $cordovaNativeAudio.play('bell');
     });
 

@@ -29,6 +29,7 @@ angular.module('starter.controllers',[])
     }
     $scope.signout=function(){
         $rootScope.messages = [];
+        $rootScope.requestDisabled = false;
         data.socket.emit('rider:signout', {user:$scope.user, device:data.device});
         data.connstate.state='signout';
         localstorage.remove('state');
@@ -59,7 +60,8 @@ angular.module('starter.controllers',[])
     $scope.request=function(){
         if ($scope.lat && $scope.lng) {
             pos = {lat:$scope.lat, lng:$scope.lng};
-            data.socket.emit('rider:request', {user:data.user, address:$scope.address, device:data.device, pos:pos});
+            $rootScope.requestDisabled = true;
+            data.socket.emit('rider:request', {user:data.user, address:$scope.address, device:data.device, pos:pos}, function(data) { $rootScope.requestDisabled = false; });
         }
         else {
             geo.getGeoLocation(function(lat, lng){
