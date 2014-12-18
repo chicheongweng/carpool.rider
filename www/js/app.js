@@ -228,6 +228,7 @@ angular.module('starter', ['ionic', 'ngCordova', 'google-maps', 'starter.control
     socket.on('requestack:accepted', function(data, callback) {
         $rootScope.$apply(function(){
             data.date = Date();
+            data.status = "accepted";
             $rootScope.messages.unshift(data);
             $rootScope.requestDisabled = false;
         });
@@ -237,6 +238,9 @@ angular.module('starter', ['ionic', 'ngCordova', 'google-maps', 'starter.control
     socket.on('requestack:ignored', function(data, callback) {
         callback(true);
         $rootScope.$apply(function(){
+            data.date = Date();
+            data.status = "ignored";
+            $rootScope.messages.unshift(data);
             $rootScope.requestDisabled = false;
         });
         $cordovaNativeAudio.play('bell');
@@ -244,6 +248,9 @@ angular.module('starter', ['ionic', 'ngCordova', 'google-maps', 'starter.control
     socket.on('requestack:unavail', function(data, callback) {
         callback(true);
         $rootScope.$apply(function(){
+            data.date = Date();
+            data.status = "unavail";
+            $rootScope.messages.unshift(data);
             $rootScope.requestDisabled = false;
         });
         $cordovaNativeAudio.play('bell');

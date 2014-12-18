@@ -16,7 +16,15 @@
     <div><b><h3>Requests accepted:</b> {{messages.length}}</h3></div>
     <div class="list">
         <div class="item item-text-wrap" ng-repeat="message in messages track by $index">
+            <span ng-if="message.status == 'ignored'">
+                {{message.date}}: The driver does not respond.
+            </span>
+            <span ng-if="message.status == 'unavail'">
+                {{message.date}}: No drivers are available.
+            </span>
+            <span ng-if="message.status == 'accepted'">
             {{message.date}}: Request accepted. Driver name: {{message.user.name}}(<a ng-href="tel:{{message.user.phone}}">{{message.user.phone}}</a>). Estimated distance: {{message.distance.text}}. Estimated duration: {{message.duration.text}}.
+            </span>
         </div>
     </div>
     </ion-content>
