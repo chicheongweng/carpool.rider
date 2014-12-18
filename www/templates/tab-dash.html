@@ -17,7 +17,7 @@
     <div class="list">
         <div class="item item-text-wrap" ng-repeat="message in messages track by $index">
             <span ng-if="message.status == 'ignored'">
-                {{message.date}}: The driver does not respond.
+                {{message.date}}: The driver did not respond.
             </span>
             <span ng-if="message.status == 'unavail'">
                 {{message.date}}: No drivers are available.
