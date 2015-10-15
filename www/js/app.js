@@ -154,7 +154,7 @@ angular.module('starter', ['ionic', 'ngCordova', 'google-maps', 'starter.control
 
 .factory('data', function ($cordovaDevice, $window, $rootScope, $cordovaNativeAudio, $cordovaKeychain) {
     $rootScope.requestDisabled = false;
-    var URL = '54.251.92.139:8001';
+    var URL = 'uber.ratecoworkers.com:8001';
     var device;
     var socket;
     var user = { 
@@ -197,13 +197,16 @@ angular.module('starter', ['ionic', 'ngCordova', 'google-maps', 'starter.control
             model: undefined
         };
     }; 
+    console.log('io.connect '+URL);
     socket = io.connect(URL, {'reconnection limit': 5000, 'max reconnection attempts': Infinity});
     socket.on('connect', function() {
+        console.log('connect');
         if (connstate.state == 'signin') {
             socket.emit('driver:update', {user:user, device:device});
         }
     });
     socket.on('disconnect', function() {
+        console.log('disconnect');
         socketConnectTimeInterval = setInterval(function () {
             socket.socket.reconnect();
             if(socket.socket.connected) {
@@ -215,6 +218,7 @@ angular.module('starter', ['ionic', 'ngCordova', 'google-maps', 'starter.control
         }, 3000);
     });
     socket.on('connect_failed', function() {
+        console.log('connect_failed');
         socketConnectTimeInterval = setInterval(function () {
             socket.socket.reconnect();
             if(socket.socket.connected) {
@@ -226,6 +230,7 @@ angular.module('starter', ['ionic', 'ngCordova', 'google-maps', 'starter.control
         }, 3000);
     });
     socket.on('requestack:accepted', function(data, callback) {
+        console.log('requestack:accepted');
         $rootScope.$apply(function(){
             data.date = Date();
             data.status = "accepted";
@@ -236,6 +241,7 @@ angular.module('starter', ['ionic', 'ngCordova', 'google-maps', 'starter.control
         $cordovaNativeAudio.play('bell');
     });
     socket.on('requestack:ignored', function(data, callback) {
+        console.log('requestack:ignored');
         callback(true);
         $rootScope.$apply(function(){
             data.date = Date();
@@ -246,6 +252,7 @@ angular.module('starter', ['ionic', 'ngCordova', 'google-maps', 'starter.control
         $cordovaNativeAudio.play('bell');
     });
     socket.on('requestack:unavail', function(data, callback) {
+        console.log('requestack:unavail');
         callback(true);
         $rootScope.$apply(function(){
             data.date = Date();
