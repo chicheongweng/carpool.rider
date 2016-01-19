@@ -26,7 +26,7 @@ function checkConnection() {
     };
 };
 
-angular.module('starter', ['ionic', 'ngCordova', 'google-maps', 'starter.controllers', 'starter.services', 'starter.directives'])
+angular.module('starter', ['ionic', 'ngCordova', 'google-maps', 'starter.config', 'starter.controllers', 'starter.services', 'starter.directives'])
 
 .run(function($ionicPlatform, $rootScope, $state, $window, $cordovaNativeAudio) {
   $ionicPlatform.ready(function() {
@@ -123,10 +123,10 @@ angular.module('starter', ['ionic', 'ngCordova', 'google-maps', 'starter.control
     }
 }])
 
-.factory('geo', function($http, $cordovaGeolocation) {
+.factory('geo', function($http, $cordovaGeolocation, GOOGLEMAP_API_KEY) {
     return {
         getAddressFromGeoLocation: function(lat, lng, callback) {
-            apiKey = 'AIzaSyDEyaX4_QjqQ2_D6AhTUfvgJhmtuiG42TI';
+            apiKey = GOOGLEMAP_API_KEY;
             url = 'https://maps.googleapis.com/maps/api/geocode/json?latlng='+lat+','+lng+'&location_type=ROOFTOP&result_type=street_address&key='+apiKey;
             $http.get(url).
                 success(function(data, status, headers, config) {
@@ -152,7 +152,7 @@ angular.module('starter', ['ionic', 'ngCordova', 'google-maps', 'starter.control
     }
 })
 
-.factory('data', function ($cordovaDevice, $window, $rootScope, $cordovaNativeAudio, $cordovaKeychain) {
+.factory('data', function ($cordovaDevice, $window, $rootScope, $cordovaNativeAudio, $cordovaKeychain, GOOGLEMAP_API_KEY) {
     $rootScope.requestDisabled = false;
     var URL = 'uber.ratecoworkers.com:8001';
     var device;
@@ -264,7 +264,7 @@ angular.module('starter', ['ionic', 'ngCordova', 'google-maps', 'starter.control
     });
 
     return {
-        apiKey: 'AIzaSyAEKs4ZY-sOsDnaq-M27MiOfhWK4dJfDSg',
+        apiKey: GOOGLEMAP_API_KEY,
         device: device,
         user: user,
         URL: URL,
