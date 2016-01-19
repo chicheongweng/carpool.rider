@@ -31,7 +31,7 @@ angular.module('starter', ['ionic', 'ngCordova', 'google-maps', 'starter.control
 .run(function($ionicPlatform, $rootScope, $state, $window, $cordovaNativeAudio) {
   $ionicPlatform.ready(function() {
     if(window.cordova && window.cordova.plugins.Keyboard) {
-      cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+      cordova.plugins.Keyboard.hideKeyboardAccessoryBar(false);
     }
     if(window.StatusBar) {
       StatusBar.styleDefault();
