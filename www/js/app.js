@@ -28,7 +28,7 @@ function checkConnection() {
 
 angular.module('starter', ['ionic', 'ngCordova', 'google-maps', 'starter.config', 'starter.controllers', 'starter.services', 'starter.directives'])
 
-.run(function($ionicPlatform, $rootScope, $state, $window, $cordovaNativeAudio) {
+.run(function($ionicPlatform, $rootScope, $state, $window, $cordovaNativeAudio, $cordovaDevice, MEDIA_FILE) {
   $ionicPlatform.ready(function() {
     if(window.cordova && window.cordova.plugins.Keyboard) {
       cordova.plugins.Keyboard.hideKeyboardAccessoryBar(false);
@@ -54,6 +54,20 @@ angular.module('starter', ['ionic', 'ngCordova', 'google-maps', 'starter.config'
             $rootScope.online = true;
         });
     }, false);
+
+    var device = $cordovaDevice.getDevice();
+    var src = MEDIA_FILE;
+
+    if (typeof device != "undefined") {
+        if (device.platform.toLowerCase() === "android") {
+            src = '/android_asset/www/' + src;
+        }
+        console.log("media src = " + src);
+        $rootScope.mediaSrc = new Media(src, null, function onError(e) { console.log("error playing sound: " + JSON.stringify(e)); });
+        $rootScope.mediaSrc.play();
+    } else {
+        console.log("no sound API to play: " + src);
+    }
 
     var state = $window.localStorage['state'] || 'tab.account';
     $state.go(state);
@@ -238,7 +252,7 @@ angular.module('starter', ['ionic', 'ngCordova', 'google-maps', 'starter.config'
             $rootScope.requestDisabled = false;
         });
         callback(true);
-        $cordovaNativeAudio.play('bell');
+        $rootScope.mediaSrc.play();
     });
     socket.on('requestack:ignored', function(data, callback) {
         console.log('requestack:ignored');
@@ -249,7 +263,7 @@ angular.module('starter', ['ionic', 'ngCordova', 'google-maps', 'starter.config'
             $rootScope.messages.unshift(data);
             $rootScope.requestDisabled = false;
         });
-        $cordovaNativeAudio.play('bell');
+        $rootScope.mediaSrc.play();
     });
     socket.on('requestack:unavail', function(data, callback) {
         console.log('requestack:unavail');
@@ -260,7 +274,7 @@ angular.module('starter', ['ionic', 'ngCordova', 'google-maps', 'starter.config'
             $rootScope.messages.unshift(data);
             $rootScope.requestDisabled = false;
         });
-        $cordovaNativeAudio.play('bell');
+        $rootScope.mediaSrc.play();
     });
 
     return {
