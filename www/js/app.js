@@ -171,6 +171,8 @@ angular.module('starter', ['ionic', 'ngCordova', 'ngCordovaOauth', 'google-maps'
     var URL = 'uber.ratecoworkers.com:8001';
     var device;
     var socket;
+    var access_token = null;
+    var expires_in = 0;
     var user = { 
         name:$window.localStorage['name'] || undefined,
         phone:$window.localStorage['phone'] || undefined

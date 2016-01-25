@@ -3,5 +3,6 @@ angular.module('starter.config', [])
 .constant('MEDIA_FILE', 'audio/rider.mp3')
 .constant('LINKEDIN_CLIENT_ID', '75rh4towgrvlo6')
 .constant('LINKEDIN_CLIENT_SECRET', 'Z4cOur2STujP4TaT')
+.constant('LINKEDIN_OAUTH_URL','https://api.linkedin.com/v1/people/~:(email-address,first-name,last-name,picture-url)?format=json')
 
 ;

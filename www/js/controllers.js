@@ -4,7 +4,7 @@ angular.module('starter.controllers',[])
         return data.connstate.state=='signin';
     }
 })
-.controller('AccountCtrl', function($rootScope,$scope,data,$state, localstorage, $cordovaOauth, LINKEDIN_CLIENT_ID, LINKEDIN_CLIENT_SECRET){
+.controller('AccountCtrl', function($rootScope,$scope,data,$state, localstorage, $cordovaOauth, LINKEDIN_CLIENT_ID, LINKEDIN_CLIENT_SECRET, $http, LINKEDIN_OAUTH_URL){
     localstorage.set('state','tab.account');
     $scope.device = data.device;
     $scope.user={};
@@ -25,6 +25,7 @@ angular.module('starter.controllers',[])
             console.log("Linkedin Login Successful");
                 var access_token = result.access_token;
                 var expire_date = result.expires_in;
+                /*
                 $scope.user.name = 'johntherider';
                 $scope.user.phone = '68681234';
                 data.user.name=$scope.user.name;
@@ -34,7 +35,25 @@ angular.module('starter.controllers',[])
                 localstorage.set('phone', data.user.phone);
                 localstorage.set('connstate',data.connstate.state);
                 data.socket.emit('rider:signin', {user:$scope.user, device:data.device});
-                $state.go('tab.dash');
+                */
+
+                $http.get(LINKEDIN_OAUTH_URL,{
+                    headers: {"Authorization": "Bearer "+result.access_token}
+                }).then(
+                function(retdata) {
+                    data.user.name = retdata.data.firstName;
+                    data.user.phone = '68681234';
+                    $scope.user.name = data.user.name;
+                    $scope.user.phone = data.user.phone;
+                    data.connstate.state='signin';
+                    localstorage.set('name', data.user.name);
+                    localstorage.set('phone', data.user.phone);
+                    localstorage.set('connstate',data.connstate.state);
+                    data.socket.emit('rider:signin', {user:$scope.user, device:data.device});
+                    $state.go('tab.dash');
+                },
+                function(retdata) {
+                });
         },
             function(data, status) {
             console.log("Linkedin Login Failed");
