@@ -26,7 +26,7 @@ function checkConnection() {
     };
 };
 
-angular.module('starter', ['ionic', 'ngCordova', 'google-maps', 'starter.config', 'starter.controllers', 'starter.services', 'starter.directives'])
+angular.module('starter', ['ionic', 'ngCordova', 'ngCordovaOauth', 'google-maps', 'starter.config', 'starter.controllers', 'starter.services', 'starter.directives', 'ngCordovaOauth'])
 
 .run(function($ionicPlatform, $rootScope, $state, $window, $cordovaNativeAudio, $cordovaDevice, MEDIA_FILE) {
   $ionicPlatform.ready(function() {
@@ -64,7 +64,7 @@ angular.module('starter', ['ionic', 'ngCordova', 'google-maps', 'starter.config'
         }
         console.log("media src = " + src);
         $rootScope.mediaSrc = new Media(src, null, function onError(e) { console.log("error playing sound: " + JSON.stringify(e)); });
-        $rootScope.mediaSrc.play();
+        //$rootScope.mediaSrc.play();
     } else {
         console.log("no sound API to play: " + src);
     }
