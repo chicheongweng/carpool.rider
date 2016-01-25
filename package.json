@@ -24,7 +24,8 @@
     "org.apache.cordova.network-information",
     "com.shazron.cordova.plugin.keychainutil",
     "cordova-plugin-nativeaudio",
-    "cordova-plugin-inappbrowser"
+    "cordova-plugin-inappbrowser",
+    "cordova-plugin-media"
   ],
   "cordovaPlatforms": [
     "ios",
