@@ -23,9 +23,9 @@
     "org.apache.cordova.geolocation",
     "org.apache.cordova.network-information",
     "com.shazron.cordova.plugin.keychainutil",
-    "cordova-plugin-nativeaudio",
-    "cordova-plugin-inappbrowser",
-    "cordova-plugin-media"
+    "git://github.com/apache/cordova-plugin-inappbrowser#1.0.0",
+    "cordova-plugin-media",
+    "cordova-plugin-nativeaudio"
   ],
   "cordovaPlatforms": [
     "ios",

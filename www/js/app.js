@@ -36,7 +36,7 @@ angular.module('starter', ['ionic', 'ngCordova', 'ngCordovaOauth', 'google-maps'
     if(window.StatusBar) {
       StatusBar.styleDefault();
     }
-    $cordovaNativeAudio.preloadSimple('bell', 'audio/rider.mp3')
+    $cordovaNativeAudio.preloadSimple('rider', 'audio/rider.mp3')
     .then(function (msg) {
         console.log(msg);
     }, function (error) {
@@ -54,7 +54,7 @@ angular.module('starter', ['ionic', 'ngCordova', 'ngCordovaOauth', 'google-maps'
             $rootScope.online = true;
         });
     }, false);
-
+    /*
     var device = $cordovaDevice.getDevice();
     var src = MEDIA_FILE;
 
@@ -68,6 +68,14 @@ angular.module('starter', ['ionic', 'ngCordova', 'ngCordovaOauth', 'google-maps'
     } else {
         console.log("no sound API to play: " + src);
     }
+    */
+    $cordovaNativeAudio.preloadSimple('rider', 'audio/rider.mp3').then(
+    function(msg) {
+        console.log("audio loaded successfully "+msg);
+    },
+    function(err) {
+        console.log("audio loaded failed "+err);
+    });
 
     var state = $window.localStorage['state'] || 'tab.account';
     $state.go(state);
@@ -254,7 +262,7 @@ angular.module('starter', ['ionic', 'ngCordova', 'ngCordovaOauth', 'google-maps'
             $rootScope.requestDisabled = false;
         });
         callback(true);
-        $rootScope.mediaSrc.play();
+        $cordovaNativeAudio.play('rider');
     });
     socket.on('requestack:ignored', function(data, callback) {
         console.log('requestack:ignored');
@@ -265,7 +273,7 @@ angular.module('starter', ['ionic', 'ngCordova', 'ngCordovaOauth', 'google-maps'
             $rootScope.messages.unshift(data);
             $rootScope.requestDisabled = false;
         });
-        $rootScope.mediaSrc.play();
+        $cordovaNativeAudio.play('rider');
     });
     socket.on('requestack:unavail', function(data, callback) {
         console.log('requestack:unavail');
@@ -276,7 +284,7 @@ angular.module('starter', ['ionic', 'ngCordova', 'ngCordovaOauth', 'google-maps'
             $rootScope.messages.unshift(data);
             $rootScope.requestDisabled = false;
         });
-        $rootScope.mediaSrc.play();
+        $cordovaNativeAudio.play('rider');
     });
 
     return {

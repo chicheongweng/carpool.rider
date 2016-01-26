@@ -20,7 +20,7 @@ angular.module('starter.controllers',[])
     console.log("signing in ...");
     console.log("LINKEDIN_CLIENT_ID = "+LINKEDIN_CLIENT_ID);
     console.log("LINKEDIN_CLIENT_SECRET = "+LINKEDIN_CLIENT_SECRET);
-    $cordovaOauth.linkedin(LINKEDIN_CLIENT_ID, LINKEDIN_CLIENT_SECRET, ["r_basicprofile"], "csrf token you make").then(
+    $cordovaOauth.linkedin(LINKEDIN_CLIENT_ID, LINKEDIN_CLIENT_SECRET, ["r_basicprofile"], "0x12345").then(
         function(result) {
             console.log("Linkedin Login Successful");
                 var access_token = result.access_token;
