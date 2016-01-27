@@ -21,7 +21,6 @@
     "cordova-plugin-splashscreen",
     "com.ionic.keyboard",
     "org.apache.cordova.geolocation",
-    "org.apache.cordova.network-information",
     "com.shazron.cordova.plugin.keychainutil",
     "git://github.com/apache/cordova-plugin-inappbrowser#1.0.0",
     "cordova-plugin-media",

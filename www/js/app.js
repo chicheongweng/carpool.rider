@@ -8,24 +8,6 @@ function getUUID() {
     return u.toUpperCase();
 };
 
-function checkConnection() {
-    if (window.cordova) {
-        var networkState = navigator.connection.type;
-        var states = {};
-        states[Connection.UNKNOWN]  = false;
-        states[Connection.ETHERNET] = true;
-        states[Connection.WIFI]     = true;
-        states[Connection.CELL_2G]  = true;
-        states[Connection.CELL_3G]  = true;
-        states[Connection.CELL_4G]  = true;
-        states[Connection.CELL]     = true;
-        states[Connection.NONE]     = false;
-        return states[networkState];
-    } else {
-        return navigator.onLine;
-    };
-};
-
 angular.module('starter', ['ionic', 'ngCordova', 'ngCordovaOauth', 'google-maps', 'starter.config', 'starter.controllers', 'starter.services', 'starter.directives', 'ngCordovaOauth'])
 
 .run(function($ionicPlatform, $rootScope, $state, $window, $cordovaNativeAudio, $cordovaDevice, MEDIA_FILE) {
@@ -42,18 +24,6 @@ angular.module('starter', ['ionic', 'ngCordova', 'ngCordovaOauth', 'google-maps'
     }, function (error) {
         alert(error);
     });
-
-    $rootScope.online = checkConnection();
-    $window.addEventListener("offline", function () {
-        $rootScope.$apply(function() {
-            $rootScope.online = false;
-        });
-    }, false);
-    $window.addEventListener("online", function () {
-        $rootScope.$apply(function() {
-            $rootScope.online = true;
-        });
-    }, false);
     /*
     var device = $cordovaDevice.getDevice();
     var src = MEDIA_FILE;
@@ -69,13 +39,6 @@ angular.module('starter', ['ionic', 'ngCordova', 'ngCordovaOauth', 'google-maps'
         console.log("no sound API to play: " + src);
     }
     */
-    $cordovaNativeAudio.preloadSimple('rider', 'audio/rider.mp3').then(
-    function(msg) {
-        console.log("audio loaded successfully "+msg);
-    },
-    function(err) {
-        console.log("audio loaded failed "+err);
-    });
 
     var state = $window.localStorage['state'] || 'tab.account';
     $state.go(state);
