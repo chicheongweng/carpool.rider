@@ -8,7 +8,7 @@ function getUUID() {
     return u.toUpperCase();
 };
 
-angular.module('starter', ['ionic', 'ngCordova', 'ngCordovaOauth', 'google-maps', 'starter.config', 'starter.controllers', 'starter.services', 'starter.directives', 'ngCordovaOauth'])
+angular.module('starter', ['ionic', 'ngCordova', 'ngCordovaOauth', 'google-maps', 'starter.config', 'starter.controllers', 'starter.services', 'starter.directives'])
 
 .run(function($ionicPlatform, $rootScope, $state, $window, $cordovaNativeAudio, $cordovaDevice, MEDIA_FILE) {
   $ionicPlatform.ready(function() {
