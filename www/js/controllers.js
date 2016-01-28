@@ -15,11 +15,19 @@ angular.module('starter.controllers',[])
     if (data.user.phone) {
         $scope.user.phone = data.user.phone;
     }
-    
+    $scope.state = $state;
+    if (!data.uuid) {
+        data.uuid = getUUID();
+    }   
+    $scope.uuid = data.uuid;
+                              
     $scope.signin=function(){
     console.log("signing in ...");
     console.log("LINKEDIN_CLIENT_ID = "+LINKEDIN_CLIENT_ID);
     console.log("LINKEDIN_CLIENT_SECRET = "+LINKEDIN_CLIENT_SECRET);
+    if (!$scope.user.phone) {
+        return;
+    }
     $cordovaOauth.linkedin(LINKEDIN_CLIENT_ID, LINKEDIN_CLIENT_SECRET, ["r_basicprofile"], "0x12345").then(
         function(result) {
             console.log("Linkedin Login Successful");
@@ -41,10 +49,9 @@ angular.module('starter.controllers',[])
                     headers: {"Authorization": "Bearer "+result.access_token}
                 }).then(
                 function(retdata) {
-                    data.user.name = retdata.data.firstName;
-                    data.user.phone = '68681234';
+                    data.user.name = retdata.data.firstName + ' ' + retdata.data.lastName;
+                    data.user.phone = $scope.user.phone;
                     $scope.user.name = data.user.name;
-                    $scope.user.phone = data.user.phone;
                     data.connstate.state='signin';
                     localstorage.set('name', data.user.name);
                     localstorage.set('phone', data.user.phone);
