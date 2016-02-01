@@ -137,9 +137,9 @@ angular.module('starter', ['ionic', 'ngCordova', 'ngCordovaOauth', 'google-maps'
     }
 })
 
-.factory('data', function ($cordovaDevice, $window, $rootScope, $cordovaNativeAudio, $cordovaKeychain, GOOGLEMAP_API_KEY) {
+.factory('data', function ($cordovaDevice, $window, $rootScope, $cordovaNativeAudio, $cordovaKeychain, GOOGLEMAP_API_KEY, RIDER_SOCKET_URL) {
     $rootScope.requestDisabled = false;
-    var URL = 'uber.ratecoworkers.com:8001';
+    var URL = RIDER_SOCKET_URL;
     var device;
     var socket;
     var access_token = null;
@@ -189,7 +189,7 @@ angular.module('starter', ['ionic', 'ngCordova', 'ngCordovaOauth', 'google-maps'
     socket.on('connect', function() {
         console.log('connect');
         if (connstate.state == 'signin') {
-            socket.emit('driver:update', {user:user, device:device});
+            socket.emit('rider:update', {user:user, device:device});
         }
     });
     socket.on('disconnect', function() {
